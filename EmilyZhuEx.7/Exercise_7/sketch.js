@@ -1,7 +1,12 @@
 var alien, bucket, bucketTop, tennis, nerf, target, pipe, right, left, pipet;
-var vector, pipes;
+var vector, pipes, box;
 var x, y, rotation;
-var a, b;
+var a, b; //affects the aliens at the end
+var c = 0;
+var d = 0;
+var font;
+//the ball has a set path if none of the targets are pressed
+//currently, in order to change the path of the ball, the target must be pressed and held until the ball reaches the end
 
 function preload() {
   alien = loadImage("pics/alien.png");
@@ -16,30 +21,29 @@ function preload() {
   pipet = loadImage("pics/pipet.png");
   target = loadImage("pics/vector.png");
   pipes = loadImage("pics/pipeh.png");
+  box = loadImage("pics/box.png");
+  font = loadFont("pics/font0.otf");
 } //end preload
 
 function setup() {
-  createCanvas(950, 950);
+  createCanvas(950, 1000);
   x = 0;
   y = 150;
   rotation = 0.0;
-  bob = new Monster(mouseX + 50, 750);
+  bob = new Bullet(mouseX + 50, 750);
   //background(255, 201, 239);
+
 
 } //end setup
 
 function draw() {
-  background(255, 201, 239);
+  background(190, 229, 255);
   stroke(0);
   strokeWeight(1);
   fill(0);
 
 
-  textSize(20);
-  var ms = millis();
-  text("Milliseconds \nrunning: \n" + ms, 5, 40);
-  //alien
-  //image(alien, 725, 735);
+  Targets();
 
   //inside/top of bucket
   push();
@@ -48,14 +52,9 @@ function draw() {
   image(bucketTop, 150, 145);
   pop();
 
-  //tennis ball
-  if (ms >= 1850) {
-    push();
-    translate(0, -100);
-    //rotate(TWO_PI); //make it rotate around origin so it looks like it is rolling
-    image(tennis, x, y + 140);
-    pop();
-  } //end ms1850
+  Tennis();
+  //console.log("X is: " + x);
+  //console.log("Y is: " + y);
 
   //bucket
   push();
@@ -68,164 +67,61 @@ function draw() {
   stroke(0);
   strokeWeight(2);
   textSize(50);
-  console.log("X= " + mouseX);
-  console.log("Y= " + mouseY)
-    //pipe- normal track
+
+  Pipes();
   noTint();
 
-  // pipe A
-  image(pipe, 110, 220 - (pipe.height));
-  text("A", 445, 215);
-
-  //pipe B
-  push();
-  translate(800, 0);
-  rotate((QUARTER_PI) * 1.3);
-  image(pipet, 205, 95);
-  pop();
-  text("B", 755, 310);
-
-  //pipe C
-  image(pipes, 600 - (pipes.width), 375 - (pipes.height));
-  text("C", 400, 368);
-
-  //pipe D
-  push();
-  translate(420, 415);
-  rotate((QUARTER_PI) * 3);
-  image(pipet, 205, 95);
-  pop();
-  text("D", 110, 467);
-
-  //pipe E
-  image(pipes, 580 - (pipes.width), 545 - (pipes.height));
-  text("E", 390, 538);
-
-  // pipe F
-  push();
-  translate(950, 550);
-  rotate((QUARTER_PI) * 3);
-  image(pipet, 205, 95);
-  pop();
-  text("F", 645, 608);
-
-  //pipe G
-  image(pipet, 705, 670);
-  text("G", 712, 770);
-
-  //pipes-alternate
-  tint(240, 0, 200);
-  //pipe H
-  image(pipet, 860, 265);
-  text("H", 873, 350);
-
-  //pipe I
-  push();
-  translate(1040, 318);
-  rotate((QUARTER_PI) * 2.7);
-  image(pipet, 205, 95);
-  pop();
-  text("I", 760, 440);
-
-  //pipe J
-  image(pipet, 860, 533);
-  text("J", 873, 650);
+  //box 1
+  image(box, 375 - (box.width / 2), 1000 - (box.height / 2));
+  //box 2
+  image(box, 575 - (box.width / 2), 1000 - (box.height / 2));
+  //box 3
+  image(box, 900 - (box.width / 2), 1000 - (box.height / 2));
   
-  //pipe K
-  image(left,838,700);
-  text("K",865,755);
+  //box 4 (original path)
+  image(box, 145 - (box.width / 2), 1000 - (box.height / 2));
+  if (((x >= 700) && (x <= 800)) && (y >= 869)) {
+    image(alien, a - (alien.width / 2), b - (alien.height / 2), c, d);
+    noStroke();
+    stroke(200, 20, 100);
+    textFont(font, 82);
+    text("ALIEN", a - (alien.width / 2), b - (alien.height / 2), c, d);
+    if (keyIsPressed === true) {
+      a = width / 2;
+      b = height / 2;
+      if ((c <= 750) && (d <= 750)) c += 1, d += 1;
+    } //end keypressed
+    else {
+      a = random(width);
+      b = random(height);
+    }
+  } //end if
 
+  //box 5 (Target 2)
+  image(box, 745 - (box.width / 2), 1000 - (box.height / 2));
+  if ((x >= 800) && (y >= 869)) {
+    for (var e = -50; e <= height; e += 75) {
+      for (var f = -50; f <= width; f += 140) {
+        image(alien, f, e);
+      } //end for e
+    } //end for f
+  } //end if
 
-  noTint();
-  //targets
-  //target 1
-  image(target, 880 - (target.width / 2), 205 - (target.height / 2));
-  text("1", 865, 165);
+  textFont(font, 56);
+  text("Aliens: Ooooooooooooooo!", 0, 50);
 
-  //target 2
-  image(target, 650 - (target.width / 2), 350 - (target.height / 2));
-  text("2", 635, 310);
-
-  //target 3
-  image(target, 150 - (target.width / 2), 350 - (target.height / 2));
-  text("3", 135, 310);
-
-  //target 4
-  image(target, 880 - (target.width / 2), 485 - (target.height / 2));
-  text("4", 920, 500);
-
-  //target 5
-  image(target, 80 - (target.width / 2), 575 - (target.height / 2));
-  text("5", 65, 535);
-
-  //target6
-  image(target, 500 - (target.width / 2), 875 - (target.height / 2));
-  text("6", 485, 835);
-
-  //nerf gun and aim
-  image(nerf, mouseX, 710);
+  //aim
+  push();
+  tint(0);
   image(aim, mouseX - (aim.width / 2), mouseY - (aim.height / 2));
-
+  pop();
   //nerf bullet
-  //if (mouseIsPressed) {
   bob.display(215, 193, 255);
-  bob.move();
-  //} // end mouseIsPressed
+  //nerf gun
+  image(nerf, mouseX, 850);
 
-
-  //location of the tennis ball
+  //movement of the bucket
   rotation += 0.01;
   if (rotation > 1.25) rotation -= 0.01;
-  if (ms < 14500) x += 1.0;
-  if (ms > 30000) {
-    if (ms < 41500) {
-      x += 1.0;
-    } //end if
-    if (ms > 60000) {
-      if (ms < 68000) {
-        x += 1.0;
-      } //end if
-    } //end if
-  }
-
-  if (ms >= 14500) {
-    if (ms < 17000) {
-      x -= 1;
-      y += 1;
-    } //end if
-  } //end if
-
-  if (ms >= 17000) {
-    if (ms < 28000) {
-      x -= 1;
-    } //end if
-  } //end if
-
-  if (ms >= 28000) {
-    if (ms < 30000) {
-      x += 1;
-      y += 1;
-    } //end if
-  } //end if
-
-  if (ms >= 41500) {
-    if (ms < 43000) {
-      x -= 1;
-      y += 1;
-    } //end if
-  } //end if
-
-  if (ms >= 43000) {
-    if (ms < 55000) {
-      x -= 1;
-    } //end if
-  } //end if
-
-  if (ms >= 55000) {
-    if (ms < 60000) {
-      x += 1;
-      y += 1;
-    } //end if
-  } //end if
 
 } //end draw
