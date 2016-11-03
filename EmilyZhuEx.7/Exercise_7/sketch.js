@@ -107,7 +107,7 @@ function draw() {
     } //end for f
   } //end if
 
-  textFont(font, 56);
+  textFont(font, 55);
   text("Aliens: Ooooooooooooooo!", 0, 50);
 
   //aim
