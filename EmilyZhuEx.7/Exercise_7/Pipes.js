@@ -4,7 +4,7 @@
 
     // pipe A
     image(pipe, 110, 220 - (pipe.height));
-    // text("A", 445, 215);
+     //text("A", 445, 215);
 
     //pipe B
     push();
@@ -12,11 +12,11 @@
     rotate((QUARTER_PI) * 1.3);
     image(pipet, 205, 95);
     pop();
-    //  text("B", 755, 310);
+      //text("B", 755, 310);
 
     //pipe C
     image(pipes, 600 - (pipes.width), 375 - (pipes.height));
-    //  text("C", 400, 368);
+     // text("C", 400, 368);
 
     //pipe I
     push();
@@ -24,7 +24,7 @@
     rotate((QUARTER_PI) * 0.5);
     image(pipet, 100, 145);
     pop();
-    //  text("I", 90, 475);
+     // text("I", 90, 475);
 
     //pipe E
     push();
@@ -48,11 +48,11 @@
     rotate((QUARTER_PI) * 3);
     image(pipet, 205, 95);
     pop();
-    //   text("G", 661, 690);
+     //  text("G", 661, 690);
 
     //pipe H
     image(pipet, 719, 750);
-    //  text("H", 727, 850);
+     // text("H", 727, 850);
 
     //pipe J
     image(pipet, 20, 630);
@@ -72,7 +72,7 @@
     rotate(HALF_PI);
     image(pipet, 160, 395);
     pop();
-    // text("L", 320, 736);
+    //text("L", 320, 736);
 
     //pipe M
     push();
@@ -107,7 +107,7 @@
     //tint(240, 0, 200);
     //pipe Z
     image(pipet, 860, 265);
-    //text("Z", 873, 350);
+   // text("Z", 873, 350);
 
     //pipe Y
     push();
@@ -115,7 +115,7 @@
     rotate((QUARTER_PI) * 2.7);
     image(pipet, 205, 95);
     pop();
-    // text("Y", 755, 445);
+     //text("Y", 755, 445);
 
     //pipe X
     image(pipet, 860, 533);
@@ -123,7 +123,7 @@
 
     //pipe W
     image(left, 838, 699);
-    // text("W", 865, 753);
+     //text("W", 865, 753);
 
     //pipe V
     push();
