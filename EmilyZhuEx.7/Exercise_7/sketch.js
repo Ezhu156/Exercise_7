@@ -5,6 +5,7 @@ var a, b; //affects the aliens at the end
 var c = 0;
 var d = 0;
 var font;
+var value = 0;
 //the ball has a set path if none of the targets are pressed
 //currently, in order to change the path of the ball, the target must be pressed and held until the ball reaches the end
 
@@ -31,10 +32,19 @@ function setup() {
   y = 150;
   rotation = 0.0;
   bob = new Bullet(mouseX + 50, 750);
+  count=0;
   //background(255, 201, 239);
-
+  //var reset = createButton("reset")
+  //reset.mousePressed(resetcode);
 
 } //end setup
+function resetcode() {
+  x = 0;
+  y = 150;
+  rotation = 0.0;
+  bob = new Bullet(mouseX + 50, 750);
+  count=0;
+}
 
 function draw() {
   background(190, 229, 255);
@@ -42,10 +52,8 @@ function draw() {
   strokeWeight(1);
   fill(0);
 
-
-  Targets();
-
-  //inside/top of bucket
+  Targets()
+    //inside/top of bucket
   push();
   translate(100, -100);
   rotate(rotation);
@@ -53,8 +61,8 @@ function draw() {
   pop();
 
   Tennis();
-  //console.log("X is: " + x);
-  //console.log("Y is: " + y);
+  console.log("X is: " + x);
+  console.log("Y is: " + y);
 
   //bucket
   push();
@@ -71,43 +79,10 @@ function draw() {
   Pipes();
   noTint();
 
-  //box 1
-  image(box, 375 - (box.width / 2), 1000 - (box.height / 2));
-  //box 2
-  image(box, 575 - (box.width / 2), 1000 - (box.height / 2));
-  //box 3
-  image(box, 900 - (box.width / 2), 1000 - (box.height / 2));
-  
-  //box 4 (original path)
-  image(box, 145 - (box.width / 2), 1000 - (box.height / 2));
-  if (((x >= 700) && (x <= 800)) && (y >= 869)) {
-    image(alien, a - (alien.width / 2), b - (alien.height / 2), c, d);
-    noStroke();
-    stroke(200, 20, 100);
-    textFont(font, 82);
-    text("ALIEN", a - (alien.width / 2), b - (alien.height / 2), c, d);
-    if (keyIsPressed === true) {
-      a = width / 2;
-      b = height / 2;
-      if ((c <= 750) && (d <= 750)) c += 1, d += 1;
-    } //end keypressed
-    else {
-      a = random(width);
-      b = random(height);
-    }
-  } //end if
+Boxes();
 
-  //box 5 (Target 2)
-  image(box, 745 - (box.width / 2), 1000 - (box.height / 2));
-  if ((x >= 800) && (y >= 869)) {
-    for (var e = -50; e <= height; e += 75) {
-      for (var f = -50; f <= width; f += 140) {
-        image(alien, f, e);
-      } //end for e
-    } //end for f
-  } //end if
-
-  textFont(font, 55);
+  fill(0, 50);
+  textFont(font, 56);
   text("Aliens: Ooooooooooooooo!", 0, 50);
 
   //aim
@@ -116,7 +91,7 @@ function draw() {
   image(aim, mouseX - (aim.width / 2), mouseY - (aim.height / 2));
   pop();
   //nerf bullet
-  bob.display(215, 193, 255);
+  bob.display(0);
   //nerf gun
   image(nerf, mouseX, 850);
 
@@ -125,3 +100,22 @@ function draw() {
   if (rotation > 1.25) rotation -= 0.01;
 
 } //end draw
+
+function mousePressed() {
+  if (((mouseX >= 842) && (mouseX <= 917)) && ((mouseY >= 167) && (mouseY <= 243))) {
+    value = 1;
+  } else if (((mouseX >= 612) && (mouseX <= 687)) && ((mouseY >= 312) && (mouseY <= 487))) {
+    value = 2;
+  } else if (((mouseX >= 137) && (mouseX <= 212)) && ((mouseY >= 312) && (mouseY <= 487))) {
+    value = 3;
+  } else if (((mouseX >= 842) && (mouseX <= 917)) && ((mouseY >= 447) && (mouseY <= 522))) {
+    value = 4;
+  } else if (((mouseX >= 12) && (mouseX <= 87)) && ((mouseY >= 547) && (mouseY <= 622))) {
+    value = 5;
+  } else if (((mouseX >= 430) && (mouseX <= 505)) && ((mouseY >= 682) && (mouseY <= 757))) {
+    value = 6;
+  } else {
+    value = 0;
+  } //end else
+  resetcode();
+} //end mousePressed
