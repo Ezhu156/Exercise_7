@@ -3,7 +3,7 @@ function Tennis() {
   //var ms = millis();
   //text("Milliseconds \nrunning: \n" + ms, 95, 40);
   count += 20;
-  text("Count: " + count, 5, 120);
+ // text("Count: " + count, 5, 120);
   //tennis ball
   if (count >= 1850) {
     push();
