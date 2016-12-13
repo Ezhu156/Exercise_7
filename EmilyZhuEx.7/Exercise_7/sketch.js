@@ -1,13 +1,22 @@
+//the purpose of this program is it allows the user to control the direction of the ball
+//when a target is pressed, everything resets and the ball starts its journey again but depending on the
+//target the user pressed, the ball will move in a certain direction
+//when the ball reaches one of the boxes at the end of the path, a different action is generated
+
+//Overall, there are still a few issues in my code that can be fixed and things that can be fixed so the code runs more efficiently, but it works enough to
+//get the idea that the user has control of the end result across
 var alien, bucket, bucketTop, tennis, nerf, target, pipe, right, left, pipet;
 var vector, pipes, box;
-var x, y, rotation;
+var x, y, rotation; //x and y is the location of the tennis ball and rotation affects the bucket
 var a, b; //affects the aliens at the end
 var c = 0;
 var d = 0;
-var font;
-var value = 0;
-//the ball has a set path if none of the targets are pressed
-//currently, in order to change the path of the ball, the target must be pressed and held until the ball reaches the end
+var font; //font the text is in
+var value = 0; //value affects the mouse pressed and path of the tennis ball
+var end; //value for the boxes at the end
+var path; //the targets that affect the path of the ball
+var move; //movement of the tennis ball
+var tubes; //the pipes the ball runs through
 
 function preload() {
   alien = loadImage("pics/alien.png");
@@ -32,18 +41,26 @@ function setup() {
   y = 150;
   rotation = 0.0;
   bob = new Bullet(mouseX + 50, 750);
-  count=0;
+  count = 0;
+  end = new Boxes();
+  path = new Targets();
+  move = new Tennis();
+  tubes= new Pipes();
   //background(255, 201, 239);
   //var reset = createButton("reset")
   //reset.mousePressed(resetcode);
 
 } //end setup
-function resetcode() {
+function resetcode() { //resets the code so that when a target is pressed, the path of the tennis ball will also change
   x = 0;
   y = 150;
   rotation = 0.0;
   bob = new Bullet(mouseX + 50, 750);
-  count=0;
+  count = 0;
+  end = new Boxes();
+  path = new Targets();
+  move = new Tennis();
+  tubes= new Tubes();
 }
 
 function draw() {
@@ -52,7 +69,7 @@ function draw() {
   strokeWeight(1);
   fill(0);
 
-  Targets()
+  path.hit()
     //inside/top of bucket
   push();
   translate(100, -100);
@@ -60,7 +77,7 @@ function draw() {
   image(bucketTop, 150, 145);
   pop();
 
-  Tennis();
+  move.roll();
   console.log("X is: " + x);
   console.log("Y is: " + y);
 
@@ -76,22 +93,22 @@ function draw() {
   strokeWeight(2);
   textSize(50);
 
-  Pipes();
+  tubes.show();
   noTint();
 
-Boxes();
+  end.show(); //boxes at the end of each path
 
   fill(0, 50);
   textFont(font, 56);
   text("Aliens: Ooooooooooooooo!", 0, 50);
 
-  //aim
+  //aim (scope of the nerf gun, where the bullet will fire)
   push();
   tint(0);
   image(aim, mouseX - (aim.width / 2), mouseY - (aim.height / 2));
   pop();
-  //nerf bullet
-  bob.display(0);
+  //nerf bullet 
+  bob.display();
   //nerf gun
   image(nerf, mouseX, 850);
 
@@ -101,6 +118,7 @@ Boxes();
 
 } //end draw
 
+//mouse pressed affects the targets which then affect the movement of the ball
 function mousePressed() {
   if (((mouseX >= 842) && (mouseX <= 917)) && ((mouseY >= 167) && (mouseY <= 243))) {
     value = 1;
