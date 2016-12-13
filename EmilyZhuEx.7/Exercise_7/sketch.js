@@ -6,7 +6,7 @@
 //Overall, there are still a few issues in my code that can be fixed and things that can be fixed so the code runs more efficiently, but it works enough to
 //get the idea that the user has control of the end result across
 var alien, bucket, bucketTop, tennis, nerf, target, pipe, right, left, pipet;
-var vector, pipes, box;
+var vector, pipes, sqaure;
 var x, y, rotation; //x and y is the location of the tennis ball and rotation affects the bucket
 var a, b; //affects the aliens at the end
 var c = 0;
@@ -31,7 +31,7 @@ function preload() {
   pipet = loadImage("pics/pipet.png");
   target = loadImage("pics/vector.png");
   pipes = loadImage("pics/pipeh.png");
-  box = loadImage("pics/box.png");
+  square = loadImage("pics/box.png");
   font = loadFont("pics/font0.otf");
 } //end preload
 
@@ -60,7 +60,7 @@ function resetcode() { //resets the code so that when a target is pressed, the p
   end = new Boxes();
   path = new Targets();
   move = new Tennis();
-  tubes= new Tubes();
+  tubes= new Pipes();
 }
 
 function draw() {
