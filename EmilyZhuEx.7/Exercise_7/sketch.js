@@ -13,7 +13,7 @@ var c = 0;
 var d = 0;
 var font; //font the text is in
 var value = 0; //value affects the mouse pressed and path of the tennis ball
-var end; //value for the boxes at the end
+var square; //value for the boxes at the end
 var path; //the targets that affect the path of the ball
 var move; //movement of the tennis ball
 var tubes; //the pipes the ball runs through
